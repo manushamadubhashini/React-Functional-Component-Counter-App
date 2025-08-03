@@ -20,8 +20,15 @@ export default App;
 In `App.css`:
 ```css
 .app {
-  background-color: blue;
+  margin: 0;
+  height:  100vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
+
 ```
 
 3. Here we're going to create a counter app. So, we need to create a new package called `counter` and a new component called `Counter.tsx` inside it.
@@ -42,7 +49,7 @@ export default Counter;
 In `Counter.css`
 ```css
 .counter {
-  background-color: red;
+    background-color: darkmagenta;
 }
 ```
 
@@ -64,7 +71,7 @@ import './Counter.css';
 function Counter() {
     return (
         <div className="container">
-            <h1>React Counter (Class Component)</h1>
+             <h1>React Counter App</h1>
             <h2>Count: 0</h2>
             <div>
                 <button className="button">+</button>
@@ -79,120 +86,109 @@ export default Counter;
 
 In `Counter.css`
 ```css
-.container {
-    text-align: center;
-    padding: 2rem;
-    font-family: Arial, serif;
-    border: 2px solid #0e0e0e;
-    border-radius: 10px;
-    width: 300px;
-    margin: 2rem auto;
-    background-color: #d9d5d5;
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: darkmagenta;
+    width: 500px;
+    height: 300px;
+    box-shadow: 2px 2px 8px 2px #888888;
+    color: white;
 }
+.button{
+    font-size: 30px;
+    margin: 0 13px;
+    padding: 0 12px;
+    width: 60px;
+    background-color: cyan;
+    border: 2px solid white;
+    color: white;
 
-.button {
-    font-size: 1.5rem;
-    margin: 0.5rem;
-    padding: 0.5rem 1rem;
-    background-color: lightblue;
+}
+h2{
+    margin-top: 0;
+    padding-top: 0;
 }
 ```
 
 5. Now let's understand what are the steps that UI renders (useEffect) (React Hook) in React app.
 ```typescript jsx
-import React, {useState, useEffect, useRef} from "react";
-import './Counter.css';
-
-function Counter(props: any) {
-
-    // Mimics componentDidMount
+import "./Counter.css"
+import {useEffect, useState} from "react";
+export function Counter(props ?:any) {
+    const [count,setCount]  = useState(0) // this is a react hook it has react symbols
     useEffect(() => {
-        alert("componentDidMount: Component has been mounted! Received Props: " + props.data);
-        console.log("componentDidMount: Component has been mounted");
-
-        // Mimics componentWillUnmount
-        return () => {
-            alert("componentWillUnmount: Component is being removed");
-            console.log("componentWillUnmount: Component is being removed");
-        };
-    }, []); // Empty dependency array = run only once on mount
+        alert("componentDidMount: component has been mounted  "+ props.data)
+        return ()=>{
+            alert("componentWillUnmount : component is being removed!")
+        }
+    }, []);
 
     return (
         <div className="container">
-            <h1>React Counter (Functional Component)</h1>
-            <h2>Count: 0</h2>
+            <h1>React Counter App</h1>
+            <h2>Count : {count} </h2>
             <div>
                 <button className="button">+</button>
                 <button className="button">-</button>
             </div>
+
         </div>
     );
 }
-
-export default Counter;
 ```
 
 Here, you need to pass the props in `App.tsx`:
 ```typescript jsx
 return (
     <div className="App">
-        <Counter data={"Hello"}/>
+         <Counter data={"Saman"}/>
     </div>
 );
 ```
 
 6. Let's have a look at the how to manage UI updates using same React Hook `useEffect` (With state updates using `useState`)
 ```typescript jsx
-import React, {useState, useEffect, useRef} from "react";
-import './Counter.css';
-
-type CounterProps = {
-    data?: any;
-};
-
-function Counter(props: CounterProps) {
-    const [count, setCount] = useState(0);
-    const prevCountRef = useRef<number | null>(null);
-
-    // Mimics componentDidMount
+import "./Counter.css"
+import {useEffect, useState} from "react";
+export function Counter(props ?:any) {
+    const [count,setCount]  = useState(0) // this is a react hook it has react symbols
     useEffect(() => {
-        alert("componentDidMount: Component has been mounted! Received Props: " + props.data);
-        console.log("componentDidMount: Component has been mounted");
-
-        // Mimics componentWillUnmount
-        return () => {
-            alert("componentWillUnmount: Component is being removed");
-            console.log("componentWillUnmount: Component is being removed");
-        };
-    }, []); // Empty dependency array = run only once on mount
-
-    // Mimics componentDidUpdate
-    useEffect(() => {
-        if (prevCountRef.current !== null && prevCountRef.current !== count) {
-            alert("componentDidUpdate: Count has been updated");
-            console.log("componentDidUpdate: Count has been updated");
+        alert("componentDidMount: component has been mounted  "+ props.data)
+        return ()=>{
+            alert("componentWillUnmount : component is being removed!")
         }
-        prevCountRef.current = count;
-    }, [count]); // Runs when 'count' changes
+    }, []);
+    useEffect(() => {
+        alert("componentDidUpdate : component has been updated")
+    }, [count]);
 
-    const increment = () =>
-        setCount((prev) => prev + 1);
-    const decrement = () =>
-        setCount((prev) => prev - 1);
 
+
+    const increase = () =>{
+
+        setCount((previousCount) => previousCount + 1);
+
+    }
+    const decrease = () => {
+
+        setCount((previousState) => previousState - 1);
+
+    }
     return (
         <div className="container">
-            <h1>React Counter (Functional Component)</h1>
-            <h2>Count: {count}</h2>
+            <h1>React Counter App</h1>
+            <h2>Count : {count} </h2>
             <div>
-                <button onClick={increment} className="button">+</button>
-                <button onClick={decrement} className="button">-</button>
+                <button className="button" onClick={increase}>+</button>
+                <button className="button" onClick={decrease} >-</button>
             </div>
+
         </div>
     );
 }
-
-export default Counter;
 ```
 
 Define props in `Counter.tsx` as optional if it's not mandatory:
