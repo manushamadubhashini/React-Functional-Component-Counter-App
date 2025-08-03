@@ -1,0 +1,25 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: darkmagenta;
+    width: 500px;
+    height: 300px;
+    box-shadow: 2px 2px 8px 2px #888888;
+    color: white;
+}
+.button{
+    font-size: 30px;
+    margin: 0 13px;
+    padding: 0 12px;
+    width: 60px;
+    background-color: cyan;
+    border: 2px solid white;
+    color: white;
+
+}
+h2{
+    margin-top: 0;
+    padding-top: 0;
+}
